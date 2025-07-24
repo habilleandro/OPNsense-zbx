@@ -1,0 +1,41 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    - uuid: 4918b88734c54bd094cff7585b5d71fc
+      name: 'Templates/Network Devices'
+  templates:
+    - uuid: 88b871268f314e90b3b029e4ffebb541
+      template: 'OPNSense SpeedTest'
+      name: 'OPNSense SpeedTest'
+      groups:
+        - name: 'Templates/Network Devices'
+      items:
+        - uuid: 35e6bdccd94645b4b8d107bb864fe47b
+          name: 'SpeedTest Download'
+          key: speedtest.download
+          delay: 3m
+          value_type: FLOAT
+          units: mpbs
+          triggers:
+            - uuid: 6f14b2f4fb53400093039334574e6336
+              expression: 'nodata(/OPNSense SpeedTest/speedtest.download,300)=1'
+              name: 'SpeedTest data collection failure'
+              priority: WARNING
+        - uuid: 7a406517ddc443c99ac6656ecc3a0c23
+          name: 'SpeedTest Ping'
+          key: speedtest.ping
+          delay: 3m
+          value_type: FLOAT
+          units: ms
+        - uuid: 239243c7a1574dfea5d43309fb248d0e
+          name: 'SpeedTest Provider'
+          key: speedtest.provider
+          delay: 3m
+          value_type: TEXT
+          trends: '0'
+        - uuid: 6d763b9fbd8e474d9a69fdc846cb55d3
+          name: 'SpeedTest Upload'
+          key: speedtest.upload
+          delay: 3m
+          value_type: FLOAT
+          units: mpbs
